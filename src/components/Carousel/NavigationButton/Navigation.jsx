@@ -3,7 +3,7 @@ import style from "./Navigation.css"
 
 export const Navigation = (props) => {
     let [end, setEnd] = useState({ prev: true, next: false })
-    console.log(props)
+    
     const nextSlide = () => {
         let nextIndex = props.mainIndex + 1;
         if (nextIndex > props.slideDataLength - 1) {

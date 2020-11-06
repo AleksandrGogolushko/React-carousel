@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react"
 import style from "./Carousel.css"
-import { Navigation } from "./NavigationButton/Navigation.jsx"
 
 export const Carousel = (props) => {
     let [mainIndex, setMainindex] = useState(0)
@@ -16,32 +15,40 @@ export const Carousel = (props) => {
         // if (activeSlide.current.previousSibling == null && position.slice(11, -3) > 0) {
         //     return    target.offsetParent.children
         // } 
-        if (!props.infiniti) {
-            activeSlide.current.style.transition = transition;
-            activeSlide.current.nextSibling != null ? activeSlide.current.nextSibling.style.transition = transition : null;
-            activeSlide.current.previousSibling != null ? activeSlide.current.previousSibling.style.transition = transition : null;
 
-            activeSlide.current.style.transform = position
-            activeSlide.current.nextSibling != null ? activeSlide.current.nextSibling.style.transform = position : null;
-            activeSlide.current.previousSibling != null ? activeSlide.current.previousSibling.style.transform = position : null;
-        } else {
+        activeSlide.current.style.transition = transition;
+        activeSlide.current.nextSibling != null ? activeSlide.current.nextSibling.style.transition = transition : null;
+        activeSlide.current.previousSibling != null ? activeSlide.current.previousSibling.style.transition = transition : null;
 
-            activeSlide.current.style.transition = transition;
-            activeSlide.current.nextSibling != null ?
-                  activeSlide.current.nextSibling.style.transition = transition :
-                  activeSlide.current.parentNode.children[0].style.transition = transition;
-            activeSlide.current.previousSibling != null ? 
-                  activeSlide.current.previousSibling.style.transition = transition :
-                  activeSlide.current.parentNode.children[slide.length - 1].style.transition = transition;
+        activeSlide.current.style.transform = position
+        activeSlide.current.nextSibling != null ? activeSlide.current.nextSibling.style.transform = position : null;
+        activeSlide.current.previousSibling != null ? activeSlide.current.previousSibling.style.transform = position : null;
+        
+        // if (!props.infiniti) {
+        //     activeSlide.current.style.transition = transition;
+        //     activeSlide.current.nextSibling != null ? activeSlide.current.nextSibling.style.transition = transition : null;
+        //     activeSlide.current.previousSibling != null ? activeSlide.current.previousSibling.style.transition = transition : null;
 
-            activeSlide.current.style.transform = position
-            activeSlide.current.nextSibling != null ? 
-                   activeSlide.current.nextSibling.style.transform = position :
-                   activeSlide.current.parentNode.children[0].style.transform = position;
-            activeSlide.current.previousSibling != null ? 
-                   activeSlide.current.previousSibling.style.transform = position :
-                   activeSlide.current.parentNode.children[slide.length - 1].style.transform = position;
-        }
+        //     activeSlide.current.style.transform = position
+        //     activeSlide.current.nextSibling != null ? activeSlide.current.nextSibling.style.transform = position : null;
+        //     activeSlide.current.previousSibling != null ? activeSlide.current.previousSibling.style.transform = position : null;
+        // } else {
+            // activeSlide.current.style.transition = transition;
+            // activeSlide.current.nextSibling != null ?
+            //       activeSlide.current.nextSibling.style.transition = transition :
+            //       activeSlide.current.parentNode.children[0].style.transition = transition;
+            // activeSlide.current.previousSibling != null ? 
+            //       activeSlide.current.previousSibling.style.transition = transition :
+            //       activeSlide.current.parentNode.children[slide.length - 1].style.transition = transition;
+
+            // activeSlide.current.style.transform = position
+            // activeSlide.current.nextSibling != null ? 
+            //        activeSlide.current.nextSibling.style.transform = position :
+            //        activeSlide.current.parentNode.children[0].style.transform = position;
+            // activeSlide.current.previousSibling != null ? 
+            //        activeSlide.current.previousSibling.style.transform = position :
+            //        activeSlide.current.parentNode.children[slide.length - 1].style.transform = position;
+        // }
 
     }
 
@@ -58,14 +65,14 @@ export const Carousel = (props) => {
     const endHandler = (event) => {
         let endX = event.changedTouches[0].pageX;
         let dif = Math.abs(startPosition - endX);
-        let position = `translateX(0)`;6
+        let position = `translateX(0)`;
         setPositon(event, position, "")
-        if (startPosition < endX && dif > 60) {
+        if (startPosition < endX && dif > 70) {
             if (mainIndex == 0 && !props.infiniti) {
                 return
             }
             prevSlide()
-        } else if (startPosition > endX && dif > 60) {
+        } else if (startPosition > endX && dif > 70) {
             if (mainIndex == props.slideData.length - 1 && !props.infiniti) {
                 return
             }
@@ -149,7 +156,6 @@ export const Carousel = (props) => {
         //     return <div key={i} className={`${style.slide} ${style.slide_right} ${style.slide_Notransition} `}>{e}</div>
         // }
 
-
         if (mainIndex == i) {
             return <div ref={activeSlide} 
              onTouchStart={(event) => StartHandler(event)}
@@ -158,72 +164,58 @@ export const Carousel = (props) => {
              key={i} className={`${style.slide} ${style.slide_center} `}>{e}</div>
         }
         if (mainIndex < i) {
-            return <div  key={i} className={`${style.slide} ${style.slide_right} `}>{e}</div>
+            return <div key={i} className={`${style.slide} ${style.slide_right} `}>{e}</div>
         }
-        return <div  key={i} className={`${style.slide} ${style.slide_left}`}>{e}</div>
+        return <div key={i} className={`${style.slide} ${style.slide_left}`}>{e}</div>
     })
 
+    let dot = props.slideData.map((e, i) => {
+        return <div className={`${style.dot} ${i == mainIndex ? style.selectDot : ""}`} key={i} onClick={() => dotClickHandler(i, props.slideData.length)}></div>
+    })
 
-    // let dot = props.slideData.map((e, i) => {
-    //     return <div className={`${style.dot} ${i == mainIndex ? style.selectDot : ""}`} key={i} onClick={() => dotClickHandler(i, props.slideData.length)}></div>
-    // })
+    const dotClickHandler = (index, length) => {
+        if (!props.infiniti) {
+            if (index == 0) {
+                setEnd({ prev: true, next: false })
+            } else if (index == length - 1) {
+                setEnd({ prev: false, next: true })
+            } else {
+                setEnd({ prev: false, next: false })
+            }
+        }
+        setMainindex(index)
+    }
 
-    // const dotClickHandler = (index, length) => {
-    //     if (!props.infiniti) {
-    //         if (index == 0) {
-    //             setEnd({ prev: true, next: false })
-    //         } else if (index == length - 1) {
-    //             setEnd({ prev: false, next: true })
-    //         } else {
-    //             setEnd({ prev: false, next: false })
-    //         }
-    //     }
-    //     setMainindex(index)
-    // }
+    const nextSlide = () => {
+        let nextIndex = ++mainIndex;
+        if (nextIndex > props.slideData.length - 1) {
+            nextIndex = 0;
+        } else if (nextIndex == props.slideData.length -1 && !props.infiniti) {
+                setEnd({ prev: false, next: true })
+        } else {
+                setEnd({ prev: false, next: false })
+        }
+        setMainindex(nextIndex)
+    }
 
-    // const nextSlide = () => {
-    //     let nextIndex = ++mainIndex;
-    //     if (nextIndex > props.slideData.length - 1) {
-    //         nextIndex = 0;
-    //     } else if (nextIndex + 1 == props.slideData.length) {
-    //         if (!props.infiniti) {
-    //             setEnd({ prev: false, next: true })
-    //         }
-    //     } else {
-    //         if (!props.infiniti) {
-    //             setEnd({ prev: false, next: false })
-    //         }
-    //     }
-    //     setMainindex(nextIndex)
-    // }
-
-    // const prevSlide = () => {
-    //     let nextIndex = --mainIndex;
-    //     if (nextIndex < 0) {
-    //         nextIndex = props.slideData.length - 1;
-    //     } else if (nextIndex - 1 < 0) {
-    //         if (!props.infiniti) {
-    //             setEnd({ prev: true, next: false })
-    //         }
-    //     } else {
-    //         if (!props.infiniti) {
-    //             setEnd({ prev: false, next: false })
-    //         }
-    //     }
-    //     setMainindex(nextIndex)
-    // }
-
-
+    const prevSlide = () => {
+        let nextIndex = --mainIndex;
+        if (nextIndex < 0) {
+            nextIndex = props.slideData.length - 1;
+        } else if (nextIndex - 1 < 0 && !props.infiniti) {
+                setEnd({ prev: true, next: false })
+        } else {
+                setEnd({ prev: false, next: false })
+        }
+        setMainindex(nextIndex)
+    }
 
     return (
         <div className={style.wrapper}>
             <div className={style.slideWrapper} >
                 {!props.infiniti ? slide : infinitiSlide}
             </div>
-
-              <Navigation mainIndex={mainIndex} slideDataLength={props.slideData.length} setMainIndex={setMainindex}/>
-
-            {/* <div className={style.dotNavigation}>
+            <div className={style.dotNavigation}>
                 {dot}
             </div>
             {
@@ -233,7 +225,7 @@ export const Carousel = (props) => {
             {
                 props.infiniti ? <div className={`${style.nextButton} ${style.button}`} onClick={nextSlide}></div> :
                     <div className={`${style.nextButton} ${style.button} ${end.next ? style.disabled : ""}`} onClick={end.next ? null : nextSlide}></div>
-            } */}
+            }
         </div>
     )
 }

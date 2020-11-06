@@ -4,7 +4,7 @@ import style from "./App.css"
 import { Carousel } from "./Carousel/Carousel.jsx"
 
 
-let data = [1,2,3,4,5]
+let data = [1,2,3]
 
  export const App = () =>{
     return (
