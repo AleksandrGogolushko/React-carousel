@@ -9,7 +9,14 @@
     flex-direction: column;
 }
 
-
+.slideTrack{
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-shrink: 0;
+    transition: all 0.5s;
+}
 .button{
     width: 3%;
     height: 6%;
@@ -55,14 +62,16 @@
 }
 
 .slide{
-  width: 94%;
+  /* width: 94%; */
   height: 95%;
   border: 5px solid black;
-  flex-shrink: 0;
-  margin: 0 3%;
+  /* flex-shrink: 0; */
+  /* margin: 0 3%; */
+  margin: 0 1%;
   background: cornsilk;
-  position: absolute;
+  /* position: absolute; */
   overflow: hidden;
+  flex-basis: 100%;
 }
 
 .dotNavigation{
