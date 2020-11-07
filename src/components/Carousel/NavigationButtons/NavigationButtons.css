@@ -1,0 +1,35 @@
+.button {
+  width: 3%;
+  height: 6%;
+  background-color: goldenrod;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  transition: all 0.3s;
+}
+
+.prevButton:hover {
+  transition: all 0.3s;
+  transform: translate(-5%, -50%);
+  box-shadow: -2px 2px 0px black;
+}
+
+.prevButton {
+  left: 1%;
+  box-shadow: -5px 5px 0px black;
+}
+
+.nextButton:hover {
+  transition: all 0.3s;
+  transform: translate(5%, -50%);
+  box-shadow: 2px 2px 0px black;
+}
+
+.nextButton {
+  right: 1%;
+  box-shadow: 5px 5px 0px black;
+}
+
+.disabled {
+  opacity: 0.5;
+}

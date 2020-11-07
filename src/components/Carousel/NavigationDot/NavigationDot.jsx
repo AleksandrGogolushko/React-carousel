@@ -1,32 +1,39 @@
-import React, { useState } from "react"
-import style from "./NavigationDot.css"
+import React, { useState } from "react";
+import style from "./NavigationDot.css";
 
-export const Carousel = (props) => {
-    let [mainIndex, setMainindex] = useState(0)
-    let [end, setEnd] = useState({ prev: true, next: false })
+export const NavigationDot = React.memo((props) => {
+  let dots = [];
 
-    let dot = props.slideData.map((e, i) => {
-        return <div className={`${style.dot} ${i == mainIndex ? style.selectDot : ""}`} key={i} onClick={() => dotClickHandler(i, props.slideDataLength)}></div>
-    })
+  for (let i = 0; i < props.slidesLength; i++) {
+    dots.push(
+      <div
+        className={`${style.dot} 
+        ${i == props.mainIndex ? style.selectDot : ""} `}
+        key={i}
+        onClick={() => dotClickHandler(i, props.slidesLength)}
+      ></div>
+    );
+  }
 
-    const dotClickHandler = (index, length) => {
-        if (!props.infiniti) {
-            if (index == 0) {
-                setEnd({ ...end, prev: true, next: false })
-            } else if (index == length - 1) {
-                setEnd({ ...end, prev: false, next: true })
-            } else {
-                setEnd({ ...end, prev: false, next: false })
-            }
-        }
-        props.setMainindex(index)
-    }
+  const dotClickHandler = (index, length) => {
+      if(!props.infinity){
+        if (index == 0) {
+            props.setEnd({ prev: true, next: false });
+          } else if (index == length - 1) {
+            props.setEnd({ prev: false, next: true });
+          } else {
+            props.setEnd({ prev: false, next: false });
+          }
+      }
+    props.setMainindex(index);
+    let positionToMove = (props.slideTrack.current.offsetWidth * ((100 / length) * index)) / 100;
+    props.setTrackPosition(positionToMove);
+    props.slideTrack.current.style.transform = `translateX(-${positionToMove}px)`;
+  };
 
-    return (
-        <>
-            <div className={style.dotNavigation}>
-                {dot}
-            </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className={style.dotNavigation}>{dots}</div>
+    </>
+  );
+});

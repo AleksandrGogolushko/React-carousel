@@ -4,12 +4,12 @@ import style from "./App.css"
 import { Carousel } from "./Carousel/Carousel.jsx"
 
 
-let data = [1,2,3]
+let data = [<button onClick={() => alert("click")}>click</button>, 2, 3, 4]
 
- export const App = () =>{
+export const App = () => {
     return (
         <div className={style.wrapper}>
-           <Carousel slideData={data} infiniti={true}/>
-        </div> 
+            <Carousel slides={data} infinity={false} slidesOnScreen={1} />
+        </div>
     )
 }
