@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react"
 import style from "./Carousel.css"
+import { NavigationDot } from "./NavigationDot/NavigationDot.jsx"
 
 export const Carousel = (props) => {
     let [mainIndex, setMainindex] = useState(0)
@@ -49,25 +50,25 @@ export const Carousel = (props) => {
         return <div key={i} className={`${style.slide} `}>{e}</div>
     })
 
-    let dots = props.slides.map((e, i) => {
-        if (i <= props.slides.length - props.slidesOnScreen) {
-            return <div className={`${style.dot}  ${i == mainIndex ? style.selectDot : ""} `} key={i} onClick={(ev) => dotClickHandler(i, props.slides.length)}></div>
-        }
-    })
+    // let dots = props.slides.map((e, i) => {
+    //     if (i <= props.slides.length - props.slidesOnScreen) {
+    //         return <div className={`${style.dot}  ${i == mainIndex ? style.selectDot : ""} `} key={i} onClick={(ev) => dotClickHandler(i, props.slides.length)}></div>
+    //     }
+    // })
 
-    const dotClickHandler = (index, length, event) => {
-        if (index == 0) {
-            setEnd({ ...end, prev: true, next: false })
-        } else if (index == length - 1) {
-            setEnd({ ...end, prev: false, next: true })
-        } else {
-            setEnd({ ...end, prev: false, next: false })
-        }
-        setMainindex(index)
-        let positionToMove = (slideTrack.current.offsetWidth * (100 / slides.length * index)) / 100
-        setTrackPosition(positionToMove)
-        slideTrack.current.style.transform = `translateX(-${positionToMove}px)`
-    }
+    // const dotClickHandler = (index, length, event) => {
+    //     if (index == 0) {
+    //         setEnd({ ...end, prev: true, next: false })
+    //     } else if (index == length - 1) {
+    //         setEnd({ ...end, prev: false, next: true })
+    //     } else {
+    //         setEnd({ ...end, prev: false, next: false })
+    //     }
+    //     setMainindex(index)
+    //     let positionToMove = (slideTrack.current.offsetWidth * (100 / slides.length * index)) / 100
+    //     setTrackPosition(positionToMove)
+    //     slideTrack.current.style.transform = `translateX(-${positionToMove}px)`
+    // }
 
 
     const nextSlide = () => {
@@ -121,27 +122,59 @@ export const Carousel = (props) => {
     }
 
     return (
-        <div className={style.wrapper}>
-            <div className={style.slideWrapper} >
-                <div ref={slideTrack}
-                    onTouchStart={(event) => StartHandler(event)}
-                    onTouchMove={(event) => moveHandler(event)}
-                    onTouchEnd={(event) => endHandler(event)}
-                    style={{ width: `${(100 * slides.length) / props.slidesOnScreen}%` }} className={style.slideTrack}>
-                    {slides}
-                </div>
-            </div>
-            <div className={style.dotNavigation}>
-                {dots}
-            </div>
-            {
-                props.infinity ? <div className={`${style.prevButton} ${style.button} `} onClick={prevSlide}></div> :
-                    <div className={`${style.prevButton} ${style.button} ${end.prev ? style.disabled : ""}`} onClick={end.prev ? null : prevSlide}></div>
-            }
-            {
-                props.infinity ? <div className={`${style.nextButton} ${style.button}`} onClick={nextSlide}></div> :
-                    <div className={`${style.nextButton} ${style.button} ${end.next ? style.disabled : ""}`} onClick={end.next ? null : nextSlide}></div>
-            }
+      <div className={style.wrapper}>
+        <div className={style.slideWrapper}>
+          <div
+            ref={slideTrack}
+            onTouchStart={(event) => StartHandler(event)}
+            onTouchMove={(event) => moveHandler(event)}
+            onTouchEnd={(event) => endHandler(event)}
+            style={{
+              width: `${(100 * slides.length) / props.slidesOnScreen}%`,
+            }}
+            className={style.slideTrack}
+          >
+            {slides}
+          </div>
         </div>
-    )
+        {/* <div className={style.dotNavigation}>
+                {dots}
+            </div> */}
+        <NavigationDot
+          slidesLength={slides.length}
+          slidesOnScreen={props.slidesOnScreen}
+          mainIndex={mainIndex}
+          setMainindex={setMainindex}
+          setEnd={setEnd}
+          slideTrack={slideTrack}
+          setTrackPosition={setTrackPosition}
+        />
+        {props.infinity ? (
+          <div
+            className={`${style.prevButton} ${style.button} `}
+            onClick={prevSlide}
+          ></div>
+        ) : (
+          <div
+            className={`${style.prevButton} ${style.button} ${
+              end.prev ? style.disabled : ""
+            }`}
+            onClick={end.prev ? null : prevSlide}
+          ></div>
+        )}
+        {props.infinity ? (
+          <div
+            className={`${style.nextButton} ${style.button}`}
+            onClick={nextSlide}
+          ></div>
+        ) : (
+          <div
+            className={`${style.nextButton} ${style.button} ${
+              end.next ? style.disabled : ""
+            }`}
+            onClick={end.next ? null : nextSlide}
+          ></div>
+        )}
+      </div>
+    );
 }

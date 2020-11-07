@@ -62,43 +62,14 @@
 }
 
 .slide{
-  /* width: 94%; */
   height: 95%;
   border: 5px solid black;
-  /* flex-shrink: 0; */
-  /* margin: 0 3%; */
   margin: 0 1%;
   background: cornsilk;
-  /* position: absolute; */
   overflow: hidden;
   flex-basis: 100%;
 }
 
-.dotNavigation{
-    width: 90%;
-    height: 5%;
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.dot{
-    width: 5px;
-    height: 5px;
-    background-color: black;
-    margin: 5px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.selectDot{
-    height: 10px;
-}
-
-.dot:hover{
-    transition: all 0.2s;
-        height: 10px;
-}
 
 .slide_left{
     right: 100%;
