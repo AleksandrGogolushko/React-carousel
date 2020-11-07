@@ -80,7 +80,7 @@ export const Carousel = (props) => {
     let endX = event.changedTouches[0].pageX;
     let dif = Math.abs(startPosition - endX);
     let position = `translateX(-${trackPosition}px`;
-    setPositon( position, "");
+    setPositon(position, "");
     if (dif <= 70) {
       return;
     } else if (startPosition < endX) {
