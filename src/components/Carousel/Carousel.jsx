@@ -28,33 +28,32 @@ export const Carousel = (props) => {
         let dif = Math.abs(startPosition - endX);
         let position = `translateX(-${trackPosition}px`;
         setPositon(event, position, "")
-        if (startPosition < endX && dif > 70) {
-            if (mainIndex == 0 && !props.infiniti) {
+
+        if (dif <= 70) {
+            return
+        } else if (startPosition < endX) {
+            if (mainIndex == 0 && !props.infinity) {
                 return
             }
             prevSlide()
-        } else if (startPosition > endX && dif > 70) {
-            if (mainIndex == props.slideData.length - 1 && !props.infiniti) {
+        } else if (startPosition > endX) {
+            if (mainIndex == props.slides.length - 1 && !props.infinity) {
                 return
             }
             nextSlide()
-        } else {
-            return
         }
-
     }
+ 
 
-
-    let slide = props.slideData.map((e, i) => {
+    let slides = props.slides.map((e, i) => {
         return <div key={i} className={`${style.slide} `}>{e}</div>
     })
 
-    let dot = props.slideData.map((e, i) => {
-        if (i <= props.slideData.length - props.slideOnScreen) {
-            return <div className={`${style.dot}  ${i == mainIndex ? style.selectDot : ""} `} key={i} onClick={(ev) => dotClickHandler(i, props.slideData.length)}></div>
+    let dots = props.slides.map((e, i) => {
+        if (i <= props.slides.length - props.slidesOnScreen) {
+            return <div className={`${style.dot}  ${i == mainIndex ? style.selectDot : ""} `} key={i} onClick={(ev) => dotClickHandler(i, props.slides.length)}></div>
         }
     })
-
 
     const dotClickHandler = (index, length, event) => {
         if (index == 0) {
@@ -65,30 +64,30 @@ export const Carousel = (props) => {
             setEnd({ ...end, prev: false, next: false })
         }
         setMainindex(index)
-        let positionToMove = (slideTrack.current.offsetWidth * (100 / slide.length * index)) / 100
+        let positionToMove = (slideTrack.current.offsetWidth * (100 / slides.length * index)) / 100
         setTrackPosition(positionToMove)
         slideTrack.current.style.transform = `translateX(-${positionToMove}px)`
     }
 
 
     const nextSlide = () => {
-        if (!props.infiniti) {
-            if (mainIndex < slide.length - props.slideOnScreen) {
+        if (!props.infinity) {
+            if (mainIndex < slides.length - props.slidesOnScreen) {
                 setMainindex(++mainIndex)
-                let positionToMove = (slideTrack.current.offsetWidth * (100 / slide.length * mainIndex)) / 100
+                let positionToMove = (slideTrack.current.offsetWidth * (100 / slides.length * mainIndex)) / 100
                 setTrackPosition(positionToMove)
                 slideTrack.current.style.transform = `translateX(-${positionToMove}px)`
                 setEnd({ ...end, prev: false })
             }
-            if (mainIndex == slide.length - props.slideOnScreen) {
+            if (mainIndex == slides.length - props.slidesOnScreen) {
                 setEnd({ ...end, next: true })
             }
         } else {
             setMainindex(++mainIndex)
-            let positionToMove = (slideTrack.current.offsetWidth * (100 / slide.length * mainIndex)) / 100
+            let positionToMove = (slideTrack.current.offsetWidth * (100 / slides.length * mainIndex)) / 100
             setTrackPosition(positionToMove)
             slideTrack.current.style.transform = `translateX(-${positionToMove}px)`
-            if (mainIndex > slide.length - props.slideOnScreen) {
+            if (mainIndex > slides.length - props.slidesOnScreen) {
                 slideTrack.current.style.transform = `translateX(0px)`
                 setTrackPosition(0)
                 setMainindex(0)
@@ -97,10 +96,10 @@ export const Carousel = (props) => {
     }
 
     const prevSlide = () => {
-        if (!props.infiniti) {
+        if (!props.infinity) {
             if (mainIndex > 0) {
                 setMainindex(--mainIndex)
-                let positionToMove = (slideTrack.current.offsetWidth * (100 / slide.length * mainIndex)) / 100
+                let positionToMove = (slideTrack.current.offsetWidth * (100 / slides.length * mainIndex)) / 100
                 setTrackPosition(positionToMove)
                 slideTrack.current.style.transform = `translateX(-${positionToMove}px)`
                 setEnd({ ...end, next: false })
@@ -110,13 +109,13 @@ export const Carousel = (props) => {
             }
         } else {
             setMainindex(--mainIndex)
-            let positionToMove = (slideTrack.current.offsetWidth * (100 / slide.length * mainIndex)) / 100
+            let positionToMove = (slideTrack.current.offsetWidth * (100 / slides.length * mainIndex)) / 100
             setTrackPosition(positionToMove)
             slideTrack.current.style.transform = `translateX(-${positionToMove}px)`
             if (mainIndex < 0) {
-                slideTrack.current.style.transform = `translateX(-${(slideTrack.current.offsetWidth * (100 / slide.length * (slide.length - props.slideOnScreen))) / 100}px)`
-                setMainindex(slide.length - props.slideOnScreen)
-                setTrackPosition((slideTrack.current.offsetWidth * (100 / slide.length * (slide.length - props.slideOnScreen))) / 100)
+                slideTrack.current.style.transform = `translateX(-${(slideTrack.current.offsetWidth * (100 / slides.length * (slides.length - props.slidesOnScreen))) / 100}px)`
+                setMainindex(slides.length - props.slidesOnScreen)
+                setTrackPosition((slideTrack.current.offsetWidth * (100 / slides.length * (slides.length - props.slidesOnScreen))) / 100)
             }
         }
     }
@@ -128,19 +127,19 @@ export const Carousel = (props) => {
                     onTouchStart={(event) => StartHandler(event)}
                     onTouchMove={(event) => moveHandler(event)}
                     onTouchEnd={(event) => endHandler(event)}
-                    style={{ width: `${(100 * slide.length) / props.slideOnScreen}%` }} className={style.slideTrack}>
-                    {slide}
+                    style={{ width: `${(100 * slides.length) / props.slidesOnScreen}%` }} className={style.slideTrack}>
+                    {slides}
                 </div>
             </div>
             <div className={style.dotNavigation}>
-                {dot}
+                {dots}
             </div>
             {
-                props.infiniti ? <div className={`${style.prevButton} ${style.button} `} onClick={prevSlide}></div> :
+                props.infinity ? <div className={`${style.prevButton} ${style.button} `} onClick={prevSlide}></div> :
                     <div className={`${style.prevButton} ${style.button} ${end.prev ? style.disabled : ""}`} onClick={end.prev ? null : prevSlide}></div>
             }
             {
-                props.infiniti ? <div className={`${style.nextButton} ${style.button}`} onClick={nextSlide}></div> :
+                props.infinity ? <div className={`${style.nextButton} ${style.button}`} onClick={nextSlide}></div> :
                     <div className={`${style.nextButton} ${style.button} ${end.next ? style.disabled : ""}`} onClick={end.next ? null : nextSlide}></div>
             }
         </div>
