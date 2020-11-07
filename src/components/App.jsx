@@ -9,7 +9,7 @@ let data = [<button onClick={()=>alert("click")}>click</button>,2,3,4]
  export const App = () =>{
     return (
         <div className={style.wrapper}>
-           <Carousel slideData={data} infiniti={true}/>
+           <Carousel slideData={data} infiniti={true} slideOnScreen={2}/>
         </div> 
     )
 }
