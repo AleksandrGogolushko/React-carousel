@@ -1,11 +1,11 @@
 # React-carousel
 
-In this project, a react-carousel was implemented that works both on mobile and desktop devices, and can receive any HTML content.
+In this project, a react-carousel was implemented that works both on mobile and desktop devices, and can show any HTML content.
  ____________________________________________________________________________
  
 ## Main features:
  * Multiple slides on the screen;
- * Infinity options;
+ * Infinity option;
  * Scroling to selected slide;
  * Supports swipes (on mibile and desktop devices);
  ____________________________________________________________________________
@@ -47,7 +47,7 @@ export const App = () => {
  cd React-carousel
  npm i 
  npm start
- open in browser http://localhost:8080/
- ```
+  ```
+  Then open in browser http://localhost:8080/
  
  
