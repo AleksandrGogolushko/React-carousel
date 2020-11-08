@@ -7,7 +7,7 @@ In this project, a react-carousel was implemented that works both on mobile and 
  * Multiple slides on the screen;
  * Infinity options;
  * Scroling to selected slide;
- * Supports swipes;
+ * Supports swipes (on mibile and desktop devices);
  ____________________________________________________________________________
  
 ## Using
