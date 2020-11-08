@@ -9,14 +9,15 @@ export const Carousel = (props) => {
   const [startPosition, setStartPosition] = useState(0);
   const [trackPosition, setTrackPosition] = useState(0);
   const [end, setEnd] = useState({ prev: true, next: false });
+  const [mouseDown, setMouseDown] = useState(false);
 
   const slides = props.slides.map((e, i) => (
-    <div key={i} className={`${style.slide} `}>
+    <div  key={i} className={`${style.slide} `}>
       {e}
     </div>
   ));
 
-   const nextSlide = () => {
+  const nextSlide = () => {
     if (!props.infinity) {
       if (mainIndex < slides.length - props.slidesOnScreen) {
         moveTo(++mainIndex);
@@ -67,20 +68,43 @@ export const Carousel = (props) => {
   };
 
   const startHandler = (event) => {
-    setStartPosition(event.touches[0].pageX);
+    if (event.touches) {
+      setStartPosition(event.touches[0].pageX);
+    } else {
+      setStartPosition(event.pageX);
+      setMouseDown(true);
+      event.target.nodeName == "IMG"?event.target.draggable = false:"" 
+    }
   };
 
   const moveHandler = (event) => {
-    let moveX = event.touches[0].pageX;
-    let position = `translateX(${moveX - startPosition - trackPosition}px)`;
-    setPositon(position, "none");
+    let moveX;
+    if (event.touches) {
+        moveX = event.touches[0].pageX;
+        setPositionAfterMove(moveX)
+    } else if (mouseDown) {
+        moveX = event.pageX;
+        setPositionAfterMove(moveX)
+    }
   };
 
+  const setPositionAfterMove = (moveX) =>{
+    let position = `translateX(${moveX - startPosition - trackPosition}px)`;
+    setPositon(position, "none");
+  }
+
   const endHandler = (event) => {
-    let endX = event.changedTouches[0].pageX;
+    let endX;
+    if (event.touches) {
+      endX = event.changedTouches[0].pageX;
+    } else {
+      endX = event.pageX;
+      setMouseDown(false);
+    }
     let dif = Math.abs(startPosition - endX);
-    let position = `translateX(-${trackPosition}px`;
-    setPositon(position, "");
+    let position = `translateX(-${trackPosition}px)`;
+    
+    setPositon(position,"");
     if (dif <= 70) {
       return;
     } else if (startPosition < endX) {
@@ -100,7 +124,7 @@ export const Carousel = (props) => {
     slideTrack.current.style.transition = transition;
     slideTrack.current.style.transform = position;
   };
-  
+
   return (
     <div className={style.wrapper}>
       <div className={style.slideWrapper}>
@@ -109,6 +133,9 @@ export const Carousel = (props) => {
           onTouchStart={(event) => startHandler(event)}
           onTouchMove={(event) => moveHandler(event)}
           onTouchEnd={(event) => endHandler(event)}
+          onMouseDown={(event) => startHandler(event)}
+          onMouseMove={(event) => moveHandler(event)}
+          onMouseUp={(event) => endHandler(event)}
           style={{
             width: `${(100 * slides.length) / props.slidesOnScreen}%`,
           }}

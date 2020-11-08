@@ -27,7 +27,6 @@
   flex-wrap: nowrap;
   justify-content: flex-start;
   align-items: center;
-  position: relative;
 }
 
 .slide {
@@ -37,4 +36,5 @@
   background: cornsilk;
   overflow: hidden;
   flex-basis: 100%;
+  
 }
