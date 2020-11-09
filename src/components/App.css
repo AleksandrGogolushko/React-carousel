@@ -11,9 +11,26 @@
     justify-content: center;
     display: flex;
     align-items: center;
+    flex-direction: column;
 }
 
 .title{
     color: red;
     text-align: center;
+}
+
+.settings{
+    margin: 1%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+label{
+    color: white;
+    margin:0 4px 0 15px
+}
+
+input{
+    margin:0 1%
 }

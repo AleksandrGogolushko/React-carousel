@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import style from "./App.css";
 import { Carousel } from "./Carousel/Carousel.jsx";
@@ -22,9 +22,17 @@ let data = [
 ];
 
 export const App = () => {
+  let [infinity,setInfinity] = useState(false)
+  let [slidesOnScreen,setSlidesOnScreen] = useState(1)
   return (
     <div className={style.wrapper}>
-      <Carousel slides={data} infinity={false} slidesOnScreen={1} />
+      <div className={style.settings}>
+      <label htmlFor="infinity">Infinity</label>
+        <input id="infinity" type="checkbox" name="infinity" onChange={(e)=>setInfinity(e.target.checked)}/>
+        <label htmlFor="slidesOnScreen">Slides on screen</label>
+        <input id="slidesOnScreen"  type="number" name="slidesOnScreen" value={slidesOnScreen} min={0} max={data.length} onChange={(e)=>setSlidesOnScreen(e.target.value)}/>
+      </div>
+      <Carousel slides={data} infinity={infinity} slidesOnScreen={slidesOnScreen}/>
     </div>
   );
 };
