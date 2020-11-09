@@ -15,7 +15,6 @@ export const NavigationDot = React.memo((props) => {
   }
 
   const dotClickHandler = (index, length) => {
-    console.log(length)
       if(!props.infinity){
         if (index == 0) {
             props.setEnd({ prev: true, next: false });
