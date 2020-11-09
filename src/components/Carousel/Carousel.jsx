@@ -21,10 +21,10 @@ export const Carousel = (props) => {
     if (!props.infinity) {
       if (mainIndex < slides.length - props.slidesOnScreen) {
         moveTo(++mainIndex);
-        setEnd({ ...end, prev: false });
-      }
-      if (mainIndex == slides.length - props.slidesOnScreen) {
-        setEnd({ ...end, next: true });
+        mainIndex == 0 ? setEnd({ prev:true , next: false }):setEnd({ prev:false , next: false })
+      } 
+       if (mainIndex == slides.length - props.slidesOnScreen) {
+        setEnd({ prev: false, next: true });
       }
     } else {
       moveTo(++mainIndex);
@@ -40,10 +40,10 @@ export const Carousel = (props) => {
     if (!props.infinity) {
       if (mainIndex > 0) {
         moveTo(--mainIndex);
-        setEnd({ ...end, next: false });
+        setEnd({prev: false , next: false });
       }
       if (mainIndex == 0) {
-        setEnd({ ...end, prev: true });
+        setEnd({ next: false , prev: true });
       }
     } else {
       moveTo(--mainIndex);
