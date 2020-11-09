@@ -15,7 +15,7 @@ export const Carousel = (props) => {
     if(props.slidesOnScreen == slides.length){
       setEnd({ prev: true, next: true });
     }
-  },[props.slidesOnScreen,props.infinity])
+  },[])
 
   const slides = props.slides.map((e, i) => (
     <div key={i} className={`${style.slide} `}>
