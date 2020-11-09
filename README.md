@@ -15,7 +15,7 @@ In this project, a react-carousel was implemented that works both on mobile and 
  link: <https://aleksandrgogolushko.github.io/React-carousel/>.
   
  Demo version has settings on top of screen: "Infiniti", "Slides on screen". They respectively equal the `infinity`,`slidesOnScreen` options.
- If you change the `infinity` option, to correctly work, refresh the page.
+ 
   ____________________________________________________________________________
 ## Using
 ```js
