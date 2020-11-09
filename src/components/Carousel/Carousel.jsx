@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import style from "./Carousel.css";
 import { NavigationButtons } from "./NavigationButtons/NavigationButtons.jsx";
 import { NavigationDot } from "./NavigationDot/NavigationDot.jsx";
@@ -10,6 +10,12 @@ export const Carousel = (props) => {
   const [trackPosition, setTrackPosition] = useState(0);
   const [end, setEnd] = useState({ prev: true, next: false });
   const [isMouseDown, setIsMouseDown] = useState(false);
+
+  useEffect(()=>{
+    if(props.slidesOnScreen == slides.length){
+      setEnd({ prev: true, next: true });
+    }
+  },[props.slidesOnScreen,props.infinity])
 
   const slides = props.slides.map((e, i) => (
     <div key={i} className={`${style.slide} `}>
@@ -56,6 +62,7 @@ export const Carousel = (props) => {
     }
   };
 
+
   const moveTo = (mainIndex) => {
     setMainIndex(mainIndex);
     let positionToMove = getPositionToMove(mainIndex);
@@ -85,7 +92,6 @@ export const Carousel = (props) => {
       moveX = event.touches[0].pageX;
       setPositionAfterMove(moveX);
     } else if (isMouseDown) {
-      console.log(event)
             moveX = event.pageX;
             setPositionAfterMove(moveX);
     }
