@@ -5,8 +5,8 @@ export const NavigationButtons = React.memo((props) => {
   if (props.infinity) {
     return (
       <>
-        <div className={`${style.prevButton} ${style.button}`} onClick={props.prevSlide}></div>
-        <div className={`${style.nextButton} ${style.button}`} onClick={props.nextSlide}></div>
+        <div className={`${style.prevButton} ${style.button} ${props.end.prev ? style.disabled : ""}`} onClick={props.prevSlide}></div>
+        <div className={`${style.nextButton} ${style.button} ${props.end.next ? style.disabled : ""}`} onClick={props.nextSlide}></div>
       </>
     );
   }
