@@ -82,9 +82,11 @@ export const Carousel = (props) => {
   const moveHandler = (event) => {
     let moveX;
     if (event.touches) {
+      console.log(event)
       moveX = event.touches[0].pageX;
       setPositionAfterMove(moveX);
     } else if (isMouseDown) {
+      console.log(event)
             moveX = event.pageX;
             setPositionAfterMove(moveX);
     }
@@ -138,7 +140,7 @@ export const Carousel = (props) => {
           onMouseDown={(event) => startHandler(event)}
           onMouseMove={(event) => moveHandler(event)}
           onMouseUp={(event) => endHandler(event)}
-          onMouseLeave={(event)=>endHandler(event)}
+          onMouseLeave={(event)=>isMouseDown? endHandler(event):null}
           style={{
             width: `${(100 * slides.length) / props.slidesOnScreen}%`,
           }}
