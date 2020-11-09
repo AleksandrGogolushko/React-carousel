@@ -49,5 +49,10 @@ export const App = () => {
  npm start
   ```
   Then open in browser http://localhost:8080/
+  
+ ## Demo 
  
- 
+ link: <https://aleksandrgogolushko.github.io/React-carousel/>.
+  
+ Demo version has settings on top of screen: Infiniti, Slides on screen. They respectively equal the `infinity`,`slidesOnScreen` options.
+ If you change the `infinity` option, to correctly work, refresh the page.
