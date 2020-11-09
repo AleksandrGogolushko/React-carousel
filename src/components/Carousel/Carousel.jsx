@@ -82,7 +82,6 @@ export const Carousel = (props) => {
   const moveHandler = (event) => {
     let moveX;
     if (event.touches) {
-      console.log(event)
       moveX = event.touches[0].pageX;
       setPositionAfterMove(moveX);
     } else if (isMouseDown) {
