@@ -3,8 +3,7 @@ import style from "./NavigationDot.css";
 
 export const NavigationDot = React.memo((props) => {
   let dots = [];
-
-  for (let i = 0; i < props.slidesLength; i++) {
+  for (let i = 0; i < props.slidesLength-props.slidesOnScreen+1; i++) {
     dots.push(
       <div
         className={`${style.dot} 

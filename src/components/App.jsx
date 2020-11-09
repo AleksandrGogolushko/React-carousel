@@ -30,7 +30,7 @@ export const App = () => {
       <label htmlFor="infinity">Infinity</label>
         <input id="infinity" type="checkbox" name="infinity" onChange={(e)=>setInfinity(e.target.checked)}/>
         <label htmlFor="slidesOnScreen">Slides on screen</label>
-        <input id="slidesOnScreen"  type="number" name="slidesOnScreen" value={slidesOnScreen} min={0} max={data.length} onChange={(e)=>setSlidesOnScreen(e.target.value)}/>
+        <input id="slidesOnScreen"  type="number" name="slidesOnScreen" value={slidesOnScreen} min={1} max={data.length} onChange={(e)=>setSlidesOnScreen(e.target.value)}/>
       </div>
       <Carousel slides={data} infinity={infinity} slidesOnScreen={slidesOnScreen}/>
     </div>
