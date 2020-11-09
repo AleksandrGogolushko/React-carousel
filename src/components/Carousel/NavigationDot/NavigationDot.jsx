@@ -15,10 +15,11 @@ export const NavigationDot = React.memo((props) => {
   }
 
   const dotClickHandler = (index, length) => {
+    console.log(length)
       if(!props.infinity){
         if (index == 0) {
             props.setEnd({ prev: true, next: false });
-          } else if (index == length - 1) {
+          } else if (index == dots.length - 1) {
             props.setEnd({ prev: false, next: true });
           } else {
             props.setEnd({ prev: false, next: false });
